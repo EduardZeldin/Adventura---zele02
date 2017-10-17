@@ -44,7 +44,7 @@ public class Hra implements IHra {
     public String vratUvitani() {
         return "Vítejte!\n" +
 			   "Přeneseme se do kouzelné atmosféry Bradavic.\n" +
-			   "Představte si, že jste jako tří kamarádi Harry, Ron a Hermiona. "+
+			   "Představte si, že jste jako tří kamarádi Harry, Ron a Hermiona.\n"+
 			   "Sedíte v Obývácím prostoru Griffindoru. "+
                "Vaším úkolem je se vybavit co možná nejlépe.\n" +
                "A dojít do tajemné komnaty, a porazit Voldemorta!\n" +

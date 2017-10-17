@@ -7,15 +7,13 @@ package main;
 
 import javafx.application.Application;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -34,21 +32,25 @@ public class NewFXMain extends Application {
         IHra hra = new Hra();
         BorderPane borderPane = new BorderPane();
         
-        Text centralText = new Text();
+        TextArea centralText = new TextArea();
         centralText.setText(hra.vratUvitani());
+        centralText.setEditable(false);
         borderPane.setCenter(centralText);
         
-        Label zadejPrikaz = new Label("Zadej prikaz");
-        zadejPrikaz.setFont(Font.font("Arial", FontWeight.BOLD, 14));
+        Label zadejPrikazLabel = new Label("Zadej prikaz");
+        zadejPrikazLabel.setFont(Font.font("Arial", FontWeight.BOLD, 14));
+        
+        TextField zadePrikazTextArea = new TextField("...");
+        
         
         FlowPane dolniLista = new FlowPane();
         dolniLista.setAlignment(Pos.CENTER);
-        dolniLista.getChildren().add(zadejPrikaz);
+        dolniLista.getChildren().addAll(zadejPrikazLabel, zadePrikazTextArea);
         borderPane.setBottom(dolniLista);
            
        // root.getChildren().add(tlacitko);
         
-        Scene scene = new Scene(borderPane, 300, 250);
+        Scene scene = new Scene(borderPane, 500, 370);
         
         primaryStage.setTitle("Adventura");
         primaryStage.setScene(scene);

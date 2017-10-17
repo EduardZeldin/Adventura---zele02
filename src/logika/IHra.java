@@ -14,9 +14,7 @@ package logika;
  */
 public interface IHra
 {
-
-    public static Hra hra;
-    //== VEŘEJNÉ KONSTANTY =====================================================
+  //== VEŘEJNÉ KONSTANTY =====================================================
     //== DEKLAROVANÉ METODY ====================================================
     /**
      *  Vrátí úvodní zprávu pro hráče.

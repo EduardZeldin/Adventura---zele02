@@ -45,14 +45,14 @@ public class HerniPlan {
      */
     private void zalozProstoryHry() {
         // vytvářejí se jednotlivé prostory
-        Prostor loznice = new Prostor("Loznice","Pánská ložnice Griffindoru");
-        Prostor obyvak = new Prostor("Obyvak","Obývací místnost Griffindoru");
-        Prostor patro1 = new Prostor("1.patro","První patro. Procházíté mimo školníka Filče a jeho kočky missis Noris");
-        Prostor patro2 = new Prostor("2.patro","Druhé patro.Oooch, schodiště pořad mění směr");
-        Prostor patro3 = new Prostor("3.patro","Třetí patro");
-        Prostor komora = new Prostor("Komora","Komora. Vstup do další mistnosti je překrýt obrovským tříhlavým psem");
-        Prostor vez = new Prostor("Vez","Věž.Prostor je plný létajících klíčů");
-        Prostor podzemi = new Prostor ("Podzemi","Tajemná komnata Voldemorta. Voldemort vynucuje Vás podívat se do zrcadla. A zvedá kouzelnou svoji hůl!");
+        Prostor loznice = new Prostor("Loznice","Pánská ložnice Griffindoru", 110,57);
+        Prostor obyvak = new Prostor("Obyvak","Obývací místnost Griffindoru", 20,50);
+        Prostor patro1 = new Prostor("1.patro","První patro. Procházíté mimo školníka Filče a jeho kočky missis Noris", 30,80);
+        Prostor patro2 = new Prostor("2.patro","Druhé patro.Oooch, schodiště pořad mění směr", 50, 70);
+        Prostor patro3 = new Prostor("3.patro","Třetí patro", 79, 86);
+        Prostor komora = new Prostor("Komora","Komora. Vstup do další mistnosti je překrýt obrovským tříhlavým psem", 64, 63);
+        Prostor vez = new Prostor("Vez","Věž.Prostor je plný létajících klíčů", 674, 345);
+        Prostor podzemi = new Prostor ("Podzemi","Tajemná komnata Voldemorta. Voldemort vynucuje Vás podívat se do zrcadla. A zvedá kouzelnou svoji hůl!", 234, 96);
         
         
         // přiřazují se průchody mezi prostory (sousedící prostory)

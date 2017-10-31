@@ -5,6 +5,8 @@
  */
 package main;
 
+import GUI.Mapa;
+import GUI.MenuLista;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.geometry.Pos;
@@ -14,8 +16,11 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.paint.Paint;
+import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
@@ -28,22 +33,31 @@ import uiText.TextoveRozhrani;
  */
 
 
-public class NewFXMain extends Application {
+public class Main extends Application {
     
     private TextArea centralText;
     private IHra hra;
     private TextField zadejPrikazTextArea;
+    private Mapa mapa;
     
-    
+    private MenuLista menuLista;
+            
     @Override
     public void start(Stage primaryStage) {
         hra = new Hra();
+        
+        mapa = new Mapa(hra);
+        menuLista = new MenuLista(hra, this);
+        
+        
         BorderPane borderPane = new BorderPane();
         
         centralText = new TextArea();
-        centralText.setText(hra.vratUvitani());
-        centralText.setEditable(false);
-        borderPane.setCenter(centralText);
+        getCentralText().setText(hra.vratUvitani());
+        getCentralText().setEditable(false);
+        borderPane.setCenter(getCentralText());
+        
+        borderPane.setTop(menuLista);
         
         Label zadejPrikazLabel = new Label("Zadej prikaz");
         zadejPrikazLabel.setFont(Font.font("Arial", FontWeight.BOLD, 14));
@@ -54,30 +68,34 @@ public class NewFXMain extends Application {
             String vstupniPrikaz = zadejPrikazTextArea.getText();
             String odpovedHry = hra.zpracujPrikaz(vstupniPrikaz);
             
-            centralText.appendText("/n" + vstupniPrikaz + "/n");
-            centralText.appendText("/n" + odpovedHry + "/n");
+            getCentralText().appendText("/n" + vstupniPrikaz + "/n");
+            getCentralText().appendText("/n" + odpovedHry + "/n");
             
             zadejPrikazTextArea.setText("");
             
             if(hra.konecHry()) {
                 
                 zadejPrikazTextArea.setEditable(false);
-                centralText.appendText(hra.vratEpilog());
+                getCentralText().appendText(hra.vratEpilog());
                 
             }
         });
         
         // obrazek pro mapu
         FlowPane obrazekFlowPane = new FlowPane();
-        ImageView obrazekImageView = new ImageView(new Image(NewFXMain.class.getResourceAsStream("/zdroje/b76167d939ee50ec61a4659c64057cbc--pirate-treasure-maps-buried-treasure.jpg"), 300,300,false,true));
+        ImageView obrazekImageView = new ImageView(new Image(Main.class.getResourceAsStream("/zdroje/b76167d939ee50ec61a4659c64057cbc--pirate-treasure-maps-buried-treasure.jpg"), 300,300,false,true));
+        
+        Circle tecka = new Circle(10, Paint.valueOf("red"));
+        
         obrazekFlowPane.setAlignment(Pos.CENTER);
         obrazekFlowPane.getChildren().add(obrazekImageView);
-        
         
        
         FlowPane dolniLista = new FlowPane();
         dolniLista.setAlignment(Pos.CENTER);
         dolniLista.getChildren().addAll(zadejPrikazLabel, zadejPrikazTextArea);
+        
+        borderPane.setLeft(mapa);
         
         borderPane.setLeft(obrazekFlowPane); 
         borderPane.setBottom(dolniLista);
@@ -89,9 +107,25 @@ public class NewFXMain extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
         zadejPrikazTextArea.requestFocus();
+        }
+    
+    
+    
+    private AnchorPane nastaveniMapy() {
+        AnchorPane obrazekPane = new AnchorPane();
+         
+         ImageView obrazekImageView = new ImageView(new Image(Main.class.getResourceAsStream("/zdroje/b76167d939ee50ec61a4659c64057cbc--pirate-treasure-maps-buried-treasure.jpg"), 300,300,false,true));
         
         
-       
+         Circle tecka = new Circle(10, Paint.valueOf("red"));
+         
+         obrazekPane.setTopAnchor(tecka, 25.0);
+         obrazekPane.setLeftAnchor(tecka, 100.0);
+         
+        obrazekPane.getChildren().addAll(obrazekImageView, tecka);
+        
+        return obrazekPane;
+        
     }
 
     /**
@@ -112,5 +146,19 @@ public class NewFXMain extends Application {
                 System.exit(1);
             }
         }
+    }
+
+    /**
+     * @return the mapa
+     */
+    public Mapa getMapa() {
+        return mapa;
+    }
+
+    /**
+     * @return the centralText
+     */
+    public TextArea getCentralText() {
+        return centralText;
     }
 }

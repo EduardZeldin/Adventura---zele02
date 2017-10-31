@@ -1,5 +1,10 @@
 package logika;
 
+import java.util.ArrayList;
+import java.util.List;
+import utils.Observer;
+import utils.Subject;
+
 /**
  *  Class HerniPlan - třída představující mapu a stav adventury.
  * 
@@ -17,7 +22,7 @@ package logika;
  *@version    pro školní rok 2016/2017
  *@version    6.5.2017
  */
-public class HerniPlan {
+public class HerniPlan implements Subject{
     private Prostor aktualniProstor;
     private Prostor viteznyProstor;
     private Batoh batuzek;
@@ -26,10 +31,15 @@ public class HerniPlan {
     private boolean pes;
     private boolean vez;
     private boolean vyhra; // Pouze pro testovací účely ve třídě HraTest
+    
+    
+    private List<Observer> listObserver = new ArrayList<Observer>();
+    
      /**
      *  Konstruktor který vytváří jednotlivé prostory a propojuje je pomocí východů.
      *  Jako výchozí aktuální prostor nastaví halu.
      */
+    
     public HerniPlan(Hra hra) {
         zalozProstoryHry();
         batuzek = new Batoh();
@@ -150,6 +160,7 @@ public class HerniPlan {
      */
     public void setAktualniProstor(Prostor prostor) {
        aktualniProstor = prostor;
+       notifyObserver();
     }
     // Metoda vrací batoh
     public Batoh getBatoh() 
@@ -205,6 +216,29 @@ public class HerniPlan {
     public boolean getVyhra()
     {
         return this.vyhra;
+    }
+
+    /**
+     *
+     * @param observer
+     */
+    @Override
+    public void registerObserver(Observer observer) {
+        listObserver.add(observer);
+            }
+
+    @Override
+    public void removeObserver(Observer observer) {
+        listObserver.remove();
+
+    }
+
+    @Override
+    public void notifyObserver() {
+        for (Observer observer : listObserver) {
+            observer.update();
+        }
+    
     }
     }
 

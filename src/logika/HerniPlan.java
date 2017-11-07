@@ -229,7 +229,7 @@ public class HerniPlan implements Subject{
 
     @Override
     public void removeObserver(Observer observer) {
-        listObserver.remove();
+        listObserver.remove(observer);
 
     }
 

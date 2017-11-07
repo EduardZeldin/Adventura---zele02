@@ -2,6 +2,14 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/C:/Users/User/Documents/NetBeansProjects/Adventura%20-zele02/src/GUI/Mapa.java</file>
+            <file>file:/C:/Users/User/Documents/NetBeansProjects/Adventura%20-zele02/src/main/Main.java</file>
+            <file>file:/C:/Users/User/Documents/NetBeansProjects/Adventura%20-zele02/src/logika/Prostor.java</file>
+            <file>file:/C:/Users/User/Documents/NetBeansProjects/Adventura%20-zele02/src/logika/HerniPlan.java</file>
+            <file>file:/C:/Users/User/Documents/NetBeansProjects/Adventura%20-zele02/src/GUI/MenuLista.java</file>
+            <file>file:/C:/Users/User/Documents/NetBeansProjects/Adventura%20-zele02/src/utils/Observer.java</file>
+            <file>file:/C:/Users/User/Documents/NetBeansProjects/Adventura%20-zele02/src/utils/Subject.java</file>
+        </group>
     </open-files>
 </project-private>

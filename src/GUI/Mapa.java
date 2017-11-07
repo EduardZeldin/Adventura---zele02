@@ -7,9 +7,9 @@ package GUI;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
-import logika.IHra;
 import main.Main;
 import utils.Observer;
 import logika.IHra;
@@ -18,12 +18,13 @@ import logika.IHra;
  *
  * @author User
  */
-public class Mapa implements Observer {
+public class Mapa extends AnchorPane implements Observer {
 
     /**
      *
      */
     private IHra hra;
+    
    
     private Circle tecka;
     
@@ -40,7 +41,7 @@ public class Mapa implements Observer {
          ImageView obrazekImageView = new ImageView(new Image(Main.class.getResourceAsStream("/zdroje/b76167d939ee50ec61a4659c64057cbc--pirate-treasure-maps-buried-treasure.jpg"), 300,300,false,true));
         
         
-         Circle tecka = new Circle(10, Paint.valueOf("red"));
+        tecka = new Circle(10, Paint.valueOf("red"));
          
          this.setTopAnchor(tecka, 0.0);
          this.setLeftAnchor(tecka, 0.0);
@@ -49,10 +50,15 @@ public class Mapa implements Observer {
         update();
     }
     
+    
     public void newGame(IHra hra) {
+    
+     
+        
         hra.getHerniPlan().removeObserver(this);
         
-        hra = novaHra;
+         this.hra = hra;
+         
         hra.getHerniPlan().registerObserver(this);
         update();
         
@@ -61,8 +67,8 @@ public class Mapa implements Observer {
     
     @Override
     public void update() {
-        this.setTopAnchorPane(tecka, hra.getHerniPlan().getAktualniProstor().getPosTop());
-        this.setTopAnchorPane(tecka, hra.getHerniPlan().getAktualniProstor().getPosLeft());
+        this.setTopAnchor(tecka, hra.getHerniPlan().getAktualniProstor().getPosTop());
+        this.setLeftAnchor(tecka, hra.getHerniPlan().getAktualniProstor().getPosLeft());
         
         
     }

@@ -37,13 +37,23 @@ public class Main extends Application {
     
     private TextArea centralText;
     private IHra hra;
-    private TextField zadejPrikazTextArea;
-    private Mapa mapa;
     
+    public void setHra(IHra hra) {
+        this.hra = hra;
+    }
+    
+    
+    private TextField zadejPrikazTextArea;
+    
+    private Mapa mapa;
     private MenuLista menuLista;
-            
+    
+     private Stage stage;
+    
     @Override
     public void start(Stage primaryStage) {
+        this.setStage(primaryStage);
+        
         hra = new Hra();
         
         mapa = new Mapa(hra);
@@ -160,5 +170,16 @@ public class Main extends Application {
      */
     public TextArea getCentralText() {
         return centralText;
+    }
+
+    /**
+     * @return the stage
+     */
+    public Stage getStage() {
+        return stage;
+    }
+
+    private void setStage(Stage primaryStage) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

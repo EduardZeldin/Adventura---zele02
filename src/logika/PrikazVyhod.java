@@ -10,7 +10,7 @@ package logika;
  * Následně zjistí, jestli má danou věc baťůžku.
  * Pokuď ano tak jí vyhodí a věc skončí v prostoru ve kterém se hráč nachází a může jí znovu sebrat.
  */
-class PrikazVyhod implements IPrikaz {
+public class PrikazVyhod implements IPrikaz {
     private static final String NAZEV = "vyhod";
     private HerniPlan plan;
     
@@ -36,7 +36,6 @@ class PrikazVyhod implements IPrikaz {
         if(plan.getBatoh().obsahujeVec(nazevVeci))//pokud je věc v batohu tak se vyhodí do aktualní mistnosti
         {
          Vec vyhozena = plan.getBatoh().vyhodVec(nazevVeci);
-         pomocny.odeberKapacitu(pomocny.getKapacita()+vyhozena.getHmotnost());
          aktualniProstor.vlozVec(vyhozena);
          return "Vyhodil jsi z batohu " + vyhozena.getNazev();
         }
@@ -53,6 +52,11 @@ class PrikazVyhod implements IPrikaz {
      */
     @Override
     public String getNazev() {
+        return NAZEV;
+    }
+
+   
+    public static String getNazevStatic() {
         return NAZEV;
     }
 

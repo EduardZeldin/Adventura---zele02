@@ -7,6 +7,9 @@ package main;
 
 import GUI.Mapa;
 import GUI.MenuLista;
+import GUI.SeznamVychodu;
+import GUI.VeciVBatohu;
+import GUI.SeznamPrikazu;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.geometry.Pos;
@@ -14,13 +17,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
-import javafx.scene.paint.Paint;
-import javafx.scene.shape.Circle;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
@@ -29,69 +29,76 @@ import uiText.TextoveRozhrani;
 
 /**
  *
- * @author User
+ * @author zele02
  */
 
 
 public class Main extends Application {
     
-    private TextArea centralText;
+    private Stage stage;
+    private TextArea centralText = new TextArea();
     private IHra hra;
+    private TextField zadejPrikazTextArea;
+    private Mapa mapa;
+    private MenuLista menuLista;
+    private SeznamVychodu seznamVychodu;
+    private VeciVBatohu veciVBatohu;
+    //private PostavyVProstoru postavyVProstoru;
+    private SeznamPrikazu seznamPrikazu;
+    
     
     public void setHra(IHra hra) {
         this.hra = hra;
     }
     
-    
-    private TextField zadejPrikazTextArea;
-    
-    private Mapa mapa;
-    private MenuLista menuLista;
-    
-     private Stage stage;
-    
+       /**
+     * Metoda slouží ke spuštění grafického rozhraní hry
+     * a nastavení základního layoutu
+     */
     @Override
     public void start(Stage primaryStage) {
         this.setStage(primaryStage);
-        
         hra = new Hra();
-        
         mapa = new Mapa(hra);
         menuLista = new MenuLista(hra, this);
+        seznamVychodu = new SeznamVychodu(hra, centralText);
+        veciVBatohu = new VeciVBatohu(hra);
+        
+        hra.getBatoh().registerObserver(veciVBatohu);
         
         
         BorderPane borderPane = new BorderPane();
         
+        //Text s prubehem hry
         centralText = new TextArea();
-        getCentralText().setText(hra.vratUvitani());
-        getCentralText().setEditable(false);
-        borderPane.setCenter(getCentralText());
+        centralText.setText(hra.vratUvitani());
+        centralText.setEditable(false);
+        borderPane.setCenter(centralText);
         
         borderPane.setTop(menuLista);
-        
-        Label zadejPrikazLabel = new Label("Zadej prikaz");
+        //label s textem "Zadej prikaz"
+        Label zadejPrikazLabel = new Label("Zadej prikaz: ");
         zadejPrikazLabel.setFont(Font.font("Arial", FontWeight.BOLD, 14));
         
+        // text area do ktere piseme prikazy
         zadejPrikazTextArea = new TextField("...");
         
         zadejPrikazTextArea.setOnAction((ActionEvent event) -> {
             String vstupniPrikaz = zadejPrikazTextArea.getText();
             String odpovedHry = hra.zpracujPrikaz(vstupniPrikaz);
             
-            getCentralText().appendText("/n" + vstupniPrikaz + "/n");
-            getCentralText().appendText("/n" + odpovedHry + "/n");
+            getCentralText().appendText("\n" + vstupniPrikaz + "\n");
+            getCentralText().appendText("\n" + odpovedHry + "\n");
             
             zadejPrikazTextArea.setText("");
             
             if(hra.konecHry()) {
-                
                 zadejPrikazTextArea.setEditable(false);
                 getCentralText().appendText(hra.vratEpilog());
-                
             }
         });
         
-        // obrazek pro mapu
+       /* // obrazek pro mapu
         FlowPane obrazekFlowPane = new FlowPane();
         ImageView obrazekImageView = new ImageView(new Image(Main.class.getResourceAsStream("/zdroje/b76167d939ee50ec61a4659c64057cbc--pirate-treasure-maps-buried-treasure.jpg"), 300,300,false,true));
         
@@ -99,28 +106,31 @@ public class Main extends Application {
         
         obrazekFlowPane.setAlignment(Pos.CENTER);
         obrazekFlowPane.getChildren().add(obrazekImageView);
-        
-       
+        */
+       //dolni lista s elementy
         FlowPane dolniLista = new FlowPane();
         dolniLista.setAlignment(Pos.CENTER);
         dolniLista.getChildren().addAll(zadejPrikazLabel, zadejPrikazTextArea);
         
-        borderPane.setLeft(mapa);
+        Pane dolniPane = new VBox();
+        dolniPane.getChildren().add(dolniLista);
+        dolniPane.getChildren().add(veciVBatohu.getListaBatohu());
         
-        borderPane.setLeft(obrazekFlowPane); 
-        borderPane.setBottom(dolniLista);
-        
+        borderPane.setLeft(mapa); 
+        borderPane.setBottom(dolniPane);
+        borderPane.setTop(menuLista);
        // root.getChildren().add(tlacitko);
         
-        Scene scene = new Scene(borderPane, 500, 370);
+        Scene scene = new Scene(borderPane, 750, 450);
         primaryStage.setTitle("Adventura");
+        
         primaryStage.setScene(scene);
         primaryStage.show();
         zadejPrikazTextArea.requestFocus();
         }
     
     
-    
+    /**
     private AnchorPane nastaveniMapy() {
         AnchorPane obrazekPane = new AnchorPane();
          
@@ -137,7 +147,7 @@ public class Main extends Application {
         return obrazekPane;
         
     }
-
+*/
     /**
      * @param args the command line arguments
      */
@@ -146,7 +156,7 @@ public class Main extends Application {
         launch(args);
     }
         else{
-            if (args[0].equals(".txt")) {
+            if (args[0].equals("-txt")) {
                 IHra hra = new Hra();
                 TextoveRozhrani textHra = new TextoveRozhrani(hra);
                 textHra.hraj();
@@ -179,7 +189,8 @@ public class Main extends Application {
         return stage;
     }
 
-    private void setStage(Stage primaryStage) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    private void setStage(Stage stage) {
+        this.stage = stage;
+        
     }
 }

@@ -55,6 +55,13 @@ public interface IHra
      *  @return     odkaz na herní plán
      */
      public HerniPlan getHerniPlan();
+     
+       /**
+     * Metoda vrátí odkaz batohu
+     * 
+     * @return odkaz na batoh
+     */
+     public Batoh getBatoh();
     
     //== ZDĚDĚNÉ METODY ========================================================
     //== INTERNÍ DATOVÉ TYPY ===================================================

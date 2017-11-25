@@ -25,7 +25,7 @@ public class Mapa extends AnchorPane implements Observer {
      */
     private IHra hra;
     
-   
+    
     private Circle tecka;
     
     public Mapa(IHra hra) {
@@ -38,39 +38,32 @@ public class Mapa extends AnchorPane implements Observer {
     private void init() {
          
          
-         ImageView obrazekImageView = new ImageView(new Image(Main.class.getResourceAsStream("/zdroje/b76167d939ee50ec61a4659c64057cbc--pirate-treasure-maps-buried-treasure.jpg"), 300,300,false,true));
+         ImageView obrazekImageView = new ImageView(new Image(Main.class.getResourceAsStream("/zdroje/mapa.jpg"), 300,300,false,true));
         
         
         tecka = new Circle(10, Paint.valueOf("red"));
          
-         this.setTopAnchor(tecka, 0.0);
-         this.setLeftAnchor(tecka, 0.0);
+        this.setTopAnchor(tecka, 0.0);
+        this.setLeftAnchor(tecka, 0.0);
          
         this.getChildren().addAll(obrazekImageView, tecka);
         update();
     }
     
     
-    public void newGame(IHra hra) {
+    public void newGame(IHra novaHra) {
     
      
         
         hra.getHerniPlan().removeObserver(this);
-        
-         this.hra = hra;
-         
+        hra = novaHra;
         hra.getHerniPlan().registerObserver(this);
         update();
-        
-        
     }
     
     @Override
     public void update() {
         this.setTopAnchor(tecka, hra.getHerniPlan().getAktualniProstor().getPosTop());
         this.setLeftAnchor(tecka, hra.getHerniPlan().getAktualniProstor().getPosLeft());
-        
-        
     }
-    
 }

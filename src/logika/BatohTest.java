@@ -44,7 +44,6 @@ public class BatohTest
     {
         logika.Batoh batoh1 = new logika.Batoh();
         assertEquals(920, batoh1.getKapacita());
-        batoh1.pridejKapacitu(920);
         assertEquals(0, batoh1.getKapacita());
     }
 }

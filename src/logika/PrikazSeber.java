@@ -59,7 +59,6 @@ public class PrikazSeber implements IPrikaz{
                         return "Předměty levitují ve vzduchu, muste mít s sebou létající_koště abyste tu mohli sbírat věci";
                     }
                     pomocny.pridejVec(sbirana);
-                    pomocny.pridejKapacitu(sbirana.getHmotnost());
                     return "Úspěšně jste vložili do batohu " + sbirana.getNazev() +" zbývající kapacita "+ pomocny.getKapacita();
                 }   
                 else

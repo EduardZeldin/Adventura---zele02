@@ -85,7 +85,7 @@ public class HerniPlan implements Subject{
         
         Vec koste = new Vec("letajici_koste",true,100);
         Vec gauc = new Vec("gauc",false,0);
-        Vec skrinO = new Vec("skrin",false,0);
+        Vec skrinO = new Vec("skrinka",false,0);
         Vec lektvarZ = new Vec("lektvar_zdravi",true,200);
         Vec lektvarM = new Vec("lektvar_moci",true,200);
         
@@ -128,15 +128,15 @@ public class HerniPlan implements Subject{
         podzemi.vlozVec(zrcadlo);
         
         
-        skrinO.vlozVec(sala);
-        skrinO.vlozVec(svetr);
-        skrinO.vlozVec(lektvarZ);
-        skrinO.vlozVec(lektvarM);
-        
-        skrinL.vlozVec(pero);
+        skrinL.vlozVec(sala);
+        skrinL.vlozVec(svetr);
         skrinL.vlozVec(rukavice);
         skrinL.vlozVec(boty);
-        skrinL.vlozVec(kouzelnaHul);
+        
+        skrinO.vlozVec(lektvarZ);
+        skrinO.vlozVec(lektvarM);
+        skrinO.vlozVec(pero);
+        skrinO.vlozVec(kouzelnaHul);
         kufr.vlozVec(plast);
         
         zrcadlo.vlozVec(kamen);

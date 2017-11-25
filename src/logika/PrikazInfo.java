@@ -41,7 +41,8 @@ class PrikazInfo implements IPrikaz {
             Text += " " + key;
          }
      }
-                return " U sebe máte: " + Text +"| Nalézáte se v lokaci: " 
+                return " U sebe máte: " + Text +""
+                        + "\n Nalézáte se v lokaci: " 
                 + plan.getAktualniProstor().getNazev()
                 + "\n V lokaci jsou " + plan.getAktualniProstor().popisVeci()
                 + "\n Východy: " + plan.getAktualniProstor().popisVychodu();

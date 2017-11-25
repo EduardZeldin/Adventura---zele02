@@ -64,8 +64,8 @@ public class Vec
     
     public ImageView getObrazek() {
         
-       // URL url = Vec.class.getResource("/zdroje/" + nazev + ".png");
-       URL url = Vec.class.getResource("/zdroje/letajici_koste.png");
+       URL url = Vec.class.getResource("/zdroje/" + nazev + ".png");
+       //URL url = Vec.class.getResource("/zdroje/gauc.png");
        return new ImageView(url.toString());
         
     }

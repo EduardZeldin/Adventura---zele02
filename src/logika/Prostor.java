@@ -176,13 +176,17 @@ public class Prostor {
     public Collection<Prostor> getVychody() {
         return Collections.unmodifiableCollection(vychody);
     }
-    //Metoda pro vkládání veci
+    //Metoda pro vkládání veci a oznami to zaregistrovanym observerum
     public void vlozVec(Vec neco){
         veci.put(neco.getNazev(), neco);
+        
     }
-    //Metoda odebere věc z prostoru
+    //Metoda odebere věc z prostoru a oznami to zaregistrovanym observerum
     public Vec odeberVec(String nazev){
-        return veci.remove(nazev);
+        
+        Vec vec = veci.remove(nazev);
+        return vec;
+    
     }
     //Metoda vrací jestli je dana věc v prostoru
     public boolean jeVecVProstoru(String nazevVeci){
@@ -215,4 +219,12 @@ public class Prostor {
     public double getPosTop() {
         return posTop;
     }
+    
+        // vrátí seznam věcí z prostoru
+    public Map<String, Vec> vratVeciVProstoru()
+    {
+        return this.veci;
+    }
+
+  
 }

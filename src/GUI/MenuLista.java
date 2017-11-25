@@ -92,7 +92,7 @@ public class MenuLista extends MenuBar {
             public void handle(ActionEvent event) {
 
                 Stage stage = new Stage();
-                stage.setTitle("Napovea");
+                stage.setTitle("Napoveda");
                 
                 WebView webView = new WebView();
                 

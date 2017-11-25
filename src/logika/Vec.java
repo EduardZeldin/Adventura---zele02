@@ -1,7 +1,10 @@
 /* Soubor je ulozen v kodovani UTF-8.
  * Kontrola kódování: Příliš žluťoučký kůň úpěl ďábelské ódy. */
 package logika;
+import java.net.URL;
 import java.util.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 
 /*******************************************************************************
@@ -58,6 +61,13 @@ public class Vec
     {
         return seznamVeci.get(nazev);
     }
-    //== Soukromé metody (instancí i třídy) ========================================
-
+    
+    public ImageView getObrazek() {
+        
+       // URL url = Vec.class.getResource("/zdroje/" + nazev + ".png");
+       URL url = Vec.class.getResource("/zdroje/letajici_koste.png");
+       return new ImageView(url.toString());
+        
+    }
+    
 }

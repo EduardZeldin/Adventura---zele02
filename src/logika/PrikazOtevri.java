@@ -53,6 +53,8 @@ public class PrikazOtevri implements IPrikaz{
                     Vec pomocna = oteviraci.vyhodVec(x);
                     text += " \n" +x;
                     aktualniProstor.vlozVec(pomocna);
+                    // neni nejcistejsi reseni
+                    plan.getBatoh().notifyObserver();
                 }
                 oteviraci.vratObsahVeci().clear();
                 return "Úspěšně jsi otevřel " + nazev + " na zem se vysypalo:" + text;

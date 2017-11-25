@@ -83,5 +83,12 @@ public class PrikazSeber implements IPrikaz{
     public String getNazev() {
         return NAZEV;
     }
-
+/**
+     *  Metoda vrací název příkazu (pro potreby GUI)
+     *  
+     *  @ return nazev prikazu
+     */
+     public static String getNazevStatic() {
+        return NAZEV;
+    }
 }

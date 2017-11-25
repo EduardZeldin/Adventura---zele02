@@ -18,6 +18,7 @@ import logika.IHra;
 import utils.Observer;
 import logika.PrikazVyhod;
 import logika.ISpravceHry;
+import logika.PrikazSeber;
 import logika.Vec;
 
 /**
@@ -28,61 +29,61 @@ import logika.Vec;
  * @author Eduard Zeldin
  */
 
-public class VeciVBatohu implements Observer {
+public class VeciVProstoru implements Observer {
     
-    private Pane listaBatohu;
-    private Pane veciVBatohu;
+    private Pane listaVeciProstoru;
+    private Pane veciVProstoru;
     private ISpravceHry spravceHry;
 
-    public VeciVBatohu(ISpravceHry spravceHry) {
+    public VeciVProstoru(ISpravceHry spravceHry) {
         
         this.spravceHry = spravceHry;
-        this.veciVBatohu = new HBox();
-        this.veciVBatohu.setPrefHeight(80);
+        this.veciVProstoru = new HBox();
+        this.veciVProstoru.setPrefHeight(80);
         
         
-        this.listaBatohu = new VBox();
+        this.listaVeciProstoru = new VBox();
         
     
         Label nazev = new Label();
-        nazev.setText("Veci v Batohu:");
-        this.listaBatohu.getChildren().add(nazev);
-        this.listaBatohu.getChildren().add(veciVBatohu);
+        nazev.setText("Veci v Prostoru:");
+        this.listaVeciProstoru.getChildren().add(nazev);
+        this.listaVeciProstoru.getChildren().add(veciVProstoru);
                 
     }
     
-    public Pane getListaBatohu() {
+    public Pane getListaVeciVProstoru() {
         
-        return this.listaBatohu;
+        return this.listaVeciProstoru;
         
     }
     /*
     * Udalost ktera se stane pri kliknuti na tlacitko veci v batohu
     */
-    private void vyhodVecEventHandler(ActionEvent event) {
-        
+    private void pridejVecDoBatohuEventHandler(ActionEvent event) {
+       
         String nazevVeci = ((Button)event.getSource()).idProperty().get();
-        this.spravceHry.provedPrikaz(PrikazVyhod.getNazevStatic() +" "+ nazevVeci);
+        this.spravceHry.provedPrikaz(PrikazSeber.getNazevStatic() +" "+ nazevVeci);
         
     }
     
     private void smaz() {
-        this.veciVBatohu.getChildren().clear();
+        this.veciVProstoru.getChildren().clear();
         
     }
     
     private void obnov() {
         
-        for (Vec vec : spravceHry.getHra().getBatoh().vratObsahBatohu().values()) {
+        for (Vec vec : spravceHry.getHra().getHerniPlan().getAktualniProstor().vratVeciVProstoru().values()) {
             
             Button b = new Button();
             b.setGraphic(vec.getObrazek());
             b.idProperty().setValue(vec.getNazev());
-            b.setOnAction(this::vyhodVecEventHandler);
+            b.setOnAction(this::pridejVecDoBatohuEventHandler);
             
             
             
-            veciVBatohu.getChildren().add(b);
+            veciVProstoru.getChildren().add(b);
             
         }
     }

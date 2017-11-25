@@ -37,6 +37,8 @@ public class PrikazVyhod implements IPrikaz {
         {
          Vec vyhozena = plan.getBatoh().vyhodVec(nazevVeci);
          aktualniProstor.vlozVec(vyhozena);
+         // neni nejcistejsi reseni
+         plan.getBatoh().notifyObserver();
          return "Vyhodil jsi z batohu " + vyhozena.getNazev();
         }
         else
@@ -55,7 +57,11 @@ public class PrikazVyhod implements IPrikaz {
         return NAZEV;
     }
 
-   
+   /**
+     *  Metoda vrací název příkazu (pro potreby GUI)
+     *  
+     *  @ return nazev prikazu
+     */
     public static String getNazevStatic() {
         return NAZEV;
     }

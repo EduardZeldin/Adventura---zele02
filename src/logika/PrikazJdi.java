@@ -16,7 +16,7 @@ package logika;
  *@return zpráva, kterou vypíše hra hráči
  
  */
-class PrikazJdi implements IPrikaz {
+public class PrikazJdi implements IPrikaz {
     private static final String NAZEV = "jdi";
     private HerniPlan plan;
     
@@ -137,4 +137,7 @@ class PrikazJdi implements IPrikaz {
         return NAZEV;
     }
 
+    public static String getNazevStatic() {
+        return NAZEV;
+    }
 }

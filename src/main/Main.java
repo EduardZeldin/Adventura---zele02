@@ -19,6 +19,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -26,6 +27,7 @@ import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import logika.*;
 import uiText.TextoveRozhrani;
+import utils.IVykonavatelPrikazu;
 
 /**
  *
@@ -33,7 +35,7 @@ import uiText.TextoveRozhrani;
  */
 
 
-public class Main extends Application {
+public class Main extends Application implements IVykonavatelPrikazu{
     
     private Stage stage;
     private TextArea centralText = new TextArea();
@@ -61,9 +63,10 @@ public class Main extends Application {
         hra = new Hra();
         mapa = new Mapa(hra);
         menuLista = new MenuLista(hra, this);
-        seznamVychodu = new SeznamVychodu(hra, centralText);
-        veciVBatohu = new VeciVBatohu(hra);
+        seznamVychodu = new SeznamVychodu(hra, this);
+        veciVBatohu = new VeciVBatohu(hra, this);
         
+        hra.getHerniPlan().registerObserver(seznamVychodu);
         hra.getBatoh().registerObserver(veciVBatohu);
         
         
@@ -83,20 +86,7 @@ public class Main extends Application {
         // text area do ktere piseme prikazy
         zadejPrikazTextArea = new TextField("...");
         
-        zadejPrikazTextArea.setOnAction((ActionEvent event) -> {
-            String vstupniPrikaz = zadejPrikazTextArea.getText();
-            String odpovedHry = hra.zpracujPrikaz(vstupniPrikaz);
-            
-            getCentralText().appendText("\n" + vstupniPrikaz + "\n");
-            getCentralText().appendText("\n" + odpovedHry + "\n");
-            
-            zadejPrikazTextArea.setText("");
-            
-            if(hra.konecHry()) {
-                zadejPrikazTextArea.setEditable(false);
-                getCentralText().appendText(hra.vratEpilog());
-            }
-        });
+        zadejPrikazTextArea.setOnAction(this::provedPrikazEventHandler);
         
        /* // obrazek pro mapu
         FlowPane obrazekFlowPane = new FlowPane();
@@ -116,12 +106,17 @@ public class Main extends Application {
         dolniPane.getChildren().add(dolniLista);
         dolniPane.getChildren().add(veciVBatohu.getListaBatohu());
         
-        borderPane.setLeft(mapa); 
+        Pane levyPane = new HBox();
+        levyPane.getChildren().add(seznamVychodu.getListaProstoru());
+        levyPane.getChildren().add(mapa);
+        
+        borderPane.setLeft(levyPane); 
         borderPane.setBottom(dolniPane);
         borderPane.setTop(menuLista);
        // root.getChildren().add(tlacitko);
         
         Scene scene = new Scene(borderPane, 750, 450);
+        scene.setRoot(borderPane);
         primaryStage.setTitle("Adventura");
         
         primaryStage.setScene(scene);
@@ -129,6 +124,28 @@ public class Main extends Application {
         zadejPrikazTextArea.requestFocus();
         }
     
+    private void provedPrikazEventHandler(ActionEvent event) 
+    {
+            String vstupniPrikaz = zadejPrikazTextArea.getText();
+            provedPrikaz(vstupniPrikaz);
+        }
+    
+    @Override
+    public void provedPrikaz(String vstupniPrikaz) {
+        
+        String odpovedHry = hra.zpracujPrikaz(vstupniPrikaz);
+            
+            getCentralText().appendText("\n" + vstupniPrikaz + "\n");
+            getCentralText().appendText("\n" + odpovedHry + "\n");
+            
+            zadejPrikazTextArea.setText("");
+            
+            if(hra.konecHry()) {
+                zadejPrikazTextArea.setEditable(false);
+                getCentralText().appendText(hra.vratEpilog());
+            }
+        
+    } 
     
     /**
     private AnchorPane nastaveniMapy() {

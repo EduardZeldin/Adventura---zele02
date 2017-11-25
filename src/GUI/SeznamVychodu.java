@@ -8,11 +8,20 @@ package GUI;
 import java.util.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import logika.IHra;
+import logika.PrikazJdi;
+
 import logika.Prostor;
+import utils.IVykonavatelPrikazu;
 import utils.Observer;
 
 
@@ -23,59 +32,70 @@ import utils.Observer;
  * 
  * @author User
  */
-public class SeznamVychodu extends ListView implements Observer{
+public class SeznamVychodu implements Observer{
     
+    private Pane listaProstoru;
+    private Pane prostory;
     public IHra hra;
-    public TextArea centralText;
-    ObservableList<FlowPane> dataVychodu;
-    
+    private IVykonavatelPrikazu vykonavatelPrikazu;
     
 
-    public SeznamVychodu(IHra hra, TextArea centralText) {
+    public SeznamVychodu(IHra hra, IVykonavatelPrikazu vykonavatelPrikazu) {
         this.hra = hra;
-        this.centralText = centralText;
+        this.vykonavatelPrikazu = vykonavatelPrikazu;
         
-        hra.getHerniPlan().registerObserver(this);
-        init();
-        update();
+        this.prostory = new VBox();
+        this.prostory.setPrefWidth(100);
+        
+        this.listaProstoru = new VBox();
+        
+        Label nazev = new Label();
+        nazev.setText("Sousedni prostory:");
+        this.listaProstoru.getChildren().add(nazev);
+        this.listaProstoru.getChildren().add(prostory);
+        this.update();
+    }
+   
+    
+     public Pane getListaProstoru() {
+        
+        return this.listaProstoru;
+        
+    }
+    /*
+    * Udalost ktera se stane pri kliknuti na tlacitko veci v batohu
+    */
+    private void prejdiDoProstoruEventHandler(ActionEvent event) {
+        
+        String nazevProstoru = ((Button)event.getSource()).idProperty().get();
+        this.vykonavatelPrikazu.provedPrikaz(PrikazJdi.getNazevStatic() +" "+ nazevProstoru);
+        
     }
     
-    /**
-     * Restartování adventury
-     *
-     * @param hra Nová hra
-     */
-    public void novaHra(IHra hra) {
-        hra.getHerniPlan().removeObserver(this);
-        this.hra = hra;
-        hra.getHerniPlan().registerObserver(this);
-        update();
+    private void smaz() {
+        this.prostory.getChildren().clear();
+        
     }
+    
+    private void obnov() {
+        
+        for (Prostor prostor : hra.getHerniPlan().getAktualniProstor().getVychody()) {
+            
+            Button b = new Button();
+            b.setText(prostor.getNazev());
+            b.idProperty().setValue(prostor.getNazev());
+            b.setOnAction(this::prejdiDoProstoruEventHandler);
+            
+            prostory.getChildren().add(b);
+        }
+    }
+
     
     @Override
     public void update() {
-        dataVychodu.clear();
         
-        for (Prostor prostor : hra.getHerniPlan().getAktualniProstor().getVychody()) {
-            FlowPane polozka = new FlowPane();
-            
-            
-        }
-                
+        this.smaz();
+        this.obnov();
         
     }
-
-    private void init() {
-        
-        dataVychodu = FXCollections.observableArrayList();
-        this.setItems(dataVychodu);
-        this.setPrefWidth(200);
-        this.setPrefHeight(200);
-        
-    }
-    
-    
-    
-    
-    
 }

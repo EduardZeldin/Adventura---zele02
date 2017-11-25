@@ -17,6 +17,7 @@ import logika.Batoh;
 import logika.IHra;
 import utils.Observer;
 import logika.PrikazVyhod;
+import utils.IVykonavatelPrikazu;
 
 /**
  * Třída VeciVInventari vytváří seznam obrázků vecí, které jsou v inventáři.
@@ -31,10 +32,12 @@ public class VeciVBatohu implements Observer {
     private Pane listaBatohu;
     private Pane veciVBatohu;
     public IHra hra;
-    
+    private IVykonavatelPrikazu vykonavatelPrikazu;
 
-    public VeciVBatohu(IHra hra) {
+    public VeciVBatohu(IHra hra, IVykonavatelPrikazu vykonavatelPrikazu) {
+        
         this.hra = hra;
+        this.vykonavatelPrikazu = vykonavatelPrikazu;
         this.veciVBatohu = new HBox();
         this.veciVBatohu.setPrefHeight(80);
         
@@ -46,6 +49,7 @@ public class VeciVBatohu implements Observer {
         nazev.setText("Veci v Batohu:");
         this.listaBatohu.getChildren().add(nazev);
         this.listaBatohu.getChildren().add(veciVBatohu);
+        this.update();
         
     }
     
@@ -60,7 +64,7 @@ public class VeciVBatohu implements Observer {
     private void vyhodVecEventHandler(ActionEvent event) {
         
         String nazevVeci = ((Button)event.getSource()).idProperty().get();
-        this.hra.zpracujPrikaz(PrikazVyhod.getNazevStatic() +" "+ nazevVeci);
+        this.vykonavatelPrikazu.provedPrikaz(PrikazVyhod.getNazevStatic() +" "+ nazevVeci);
         
     }
     

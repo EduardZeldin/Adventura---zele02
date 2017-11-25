@@ -3,13 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package utils;
+package logika;
+
+import logika.IHra;
 
 /**
  *
  * @author User
  */
-public interface IVykonavatelPrikazu {
+public interface ISpravceHry {
   
     /**
      * Vykonava prikazy hry v GUI
@@ -17,4 +19,5 @@ public interface IVykonavatelPrikazu {
      */
     public void provedPrikaz(String vstupniPrikaz);
     
+    public IHra getHra();
 }

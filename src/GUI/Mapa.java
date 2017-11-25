@@ -13,6 +13,7 @@ import javafx.scene.shape.Circle;
 import main.Main;
 import utils.Observer;
 import logika.IHra;
+import logika.ISpravceHry;
 
 /**
  *
@@ -20,18 +21,15 @@ import logika.IHra;
  */
 public class Mapa extends AnchorPane implements Observer {
 
-    /**
-     *
-     */
-    private IHra hra;
+    private ISpravceHry spravceHry; 
     
     
     private Circle tecka;
     
-    public Mapa(IHra hra) {
-    this.hra = hra;
-    hra.getHerniPlan().registerObserver(this);
+    public Mapa(ISpravceHry spravceHry) {
+    this.spravceHry = spravceHry;
     init();
+       
     
     }
     
@@ -47,23 +45,13 @@ public class Mapa extends AnchorPane implements Observer {
         this.setLeftAnchor(tecka, 0.0);
          
         this.getChildren().addAll(obrazekImageView, tecka);
-        update();
-    }
-    
-    
-    public void newGame(IHra novaHra) {
-    
-     
         
-        hra.getHerniPlan().removeObserver(this);
-        hra = novaHra;
-        hra.getHerniPlan().registerObserver(this);
-        update();
     }
     
-    @Override
+    
+       @Override
     public void update() {
-        this.setTopAnchor(tecka, hra.getHerniPlan().getAktualniProstor().getPosTop());
-        this.setLeftAnchor(tecka, hra.getHerniPlan().getAktualniProstor().getPosLeft());
+        this.setTopAnchor(tecka, spravceHry.getHra().getHerniPlan().getAktualniProstor().getPosTop());
+        this.setLeftAnchor(tecka, spravceHry.getHra().getHerniPlan().getAktualniProstor().getPosLeft());
     }
 }

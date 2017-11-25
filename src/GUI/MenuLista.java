@@ -27,11 +27,9 @@ import logika.Hra;
 
 public class MenuLista extends MenuBar {
 
-    private IHra hra;
     private Main main;
 
-    public MenuLista(IHra hra, Main main) {
-        this.hra = hra;
+    public MenuLista(Main main) {
         this.main = main;
         init();
 
@@ -69,17 +67,8 @@ public class MenuLista extends MenuBar {
 
         });
 
-        novaHra.setOnAction(
-                new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent event
-            ) {
-
-                hra = new Hra();
-                main.getMapa().newGame(hra);
-                main.getCentralText().setText(hra.vratUvitani());
-            }
+        novaHra.setOnAction((ActionEvent event) -> {
+            main.novaHra();
         });
         
         oProgramu.setOnAction((new EventHandler<ActionEvent>() {

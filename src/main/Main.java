@@ -27,7 +27,7 @@ import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import logika.*;
 import uiText.TextoveRozhrani;
-import utils.IVykonavatelPrikazu;
+import logika.ISpravceHry;
 
 /**
  *
@@ -35,7 +35,7 @@ import utils.IVykonavatelPrikazu;
  */
 
 
-public class Main extends Application implements IVykonavatelPrikazu{
+public class Main extends Application implements ISpravceHry{
     
     private Stage stage;
     private TextArea centralText = new TextArea();
@@ -60,21 +60,22 @@ public class Main extends Application implements IVykonavatelPrikazu{
     @Override
     public void start(Stage primaryStage) {
         this.setStage(primaryStage);
-        hra = new Hra();
-        mapa = new Mapa(hra);
-        menuLista = new MenuLista(hra, this);
-        seznamVychodu = new SeznamVychodu(hra, this);
-        veciVBatohu = new VeciVBatohu(hra, this);
         
-        hra.getHerniPlan().registerObserver(seznamVychodu);
-        hra.getBatoh().registerObserver(veciVBatohu);
+        mapa = new Mapa(this);
+        menuLista = new MenuLista(this);
+        seznamVychodu = new SeznamVychodu(this);
+        veciVBatohu = new VeciVBatohu(this);
         
+        // text area do ktere piseme prikazy
+        zadejPrikazTextArea = new TextField();
+        
+        this.novaHra();
         
         BorderPane borderPane = new BorderPane();
         
         //Text s prubehem hry
         centralText = new TextArea();
-        centralText.setText(hra.vratUvitani());
+        
         centralText.setEditable(false);
         borderPane.setCenter(centralText);
         
@@ -83,20 +84,10 @@ public class Main extends Application implements IVykonavatelPrikazu{
         Label zadejPrikazLabel = new Label("Zadej prikaz: ");
         zadejPrikazLabel.setFont(Font.font("Arial", FontWeight.BOLD, 14));
         
-        // text area do ktere piseme prikazy
-        zadejPrikazTextArea = new TextField("...");
+        
         
         zadejPrikazTextArea.setOnAction(this::provedPrikazEventHandler);
         
-       /* // obrazek pro mapu
-        FlowPane obrazekFlowPane = new FlowPane();
-        ImageView obrazekImageView = new ImageView(new Image(Main.class.getResourceAsStream("/zdroje/b76167d939ee50ec61a4659c64057cbc--pirate-treasure-maps-buried-treasure.jpg"), 300,300,false,true));
-        
-        Circle tecka = new Circle(10, Paint.valueOf("red"));
-        
-        obrazekFlowPane.setAlignment(Pos.CENTER);
-        obrazekFlowPane.getChildren().add(obrazekImageView);
-        */
        //dolni lista s elementy
         FlowPane dolniLista = new FlowPane();
         dolniLista.setAlignment(Pos.CENTER);
@@ -112,17 +103,40 @@ public class Main extends Application implements IVykonavatelPrikazu{
         
         borderPane.setLeft(levyPane); 
         borderPane.setBottom(dolniPane);
-        borderPane.setTop(menuLista);
-       // root.getChildren().add(tlacitko);
+        borderPane.setTop(menuLista); 
+       
+        centralText.setText(hra.vratUvitani());
         
         Scene scene = new Scene(borderPane, 750, 450);
-        scene.setRoot(borderPane);
+        
         primaryStage.setTitle("Adventura");
         
         primaryStage.setScene(scene);
         primaryStage.show();
         zadejPrikazTextArea.requestFocus();
-        }
+    }
+    
+    public void novaHra() {
+        
+        //TODO odregistruj observerz
+        
+        hra = new Hra();
+        
+        hra.getHerniPlan().registerObserver(seznamVychodu);
+        hra.getBatoh().registerObserver(veciVBatohu);
+        hra.getHerniPlan().registerObserver(mapa);
+        
+        centralText.setText(hra.vratUvitani());
+        
+   
+        zadejPrikazTextArea.setText("...");
+        
+        this.veciVBatohu.update();
+        this.seznamVychodu.update();
+        this.mapa.update();
+        
+        zadejPrikazTextArea.requestFocus();
+    } 
     
     private void provedPrikazEventHandler(ActionEvent event) 
     {
@@ -209,5 +223,12 @@ public class Main extends Application implements IVykonavatelPrikazu{
     private void setStage(Stage stage) {
         this.stage = stage;
         
+    }
+
+    @Override
+    public IHra getHra() {
+        
+        return this.hra;
+
     }
 }

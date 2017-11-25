@@ -21,8 +21,8 @@ import logika.IHra;
 import logika.PrikazJdi;
 
 import logika.Prostor;
-import utils.IVykonavatelPrikazu;
 import utils.Observer;
+import logika.ISpravceHry;
 
 
 
@@ -36,14 +36,11 @@ public class SeznamVychodu implements Observer{
     
     private Pane listaProstoru;
     private Pane prostory;
-    public IHra hra;
-    private IVykonavatelPrikazu vykonavatelPrikazu;
+    private ISpravceHry spravceHry;
     
 
-    public SeznamVychodu(IHra hra, IVykonavatelPrikazu vykonavatelPrikazu) {
-        this.hra = hra;
-        this.vykonavatelPrikazu = vykonavatelPrikazu;
-        
+    public SeznamVychodu(ISpravceHry spravceHry) {
+        this.spravceHry = spravceHry;
         this.prostory = new VBox();
         this.prostory.setPrefWidth(100);
         
@@ -53,7 +50,6 @@ public class SeznamVychodu implements Observer{
         nazev.setText("Sousedni prostory:");
         this.listaProstoru.getChildren().add(nazev);
         this.listaProstoru.getChildren().add(prostory);
-        this.update();
     }
    
     
@@ -68,7 +64,7 @@ public class SeznamVychodu implements Observer{
     private void prejdiDoProstoruEventHandler(ActionEvent event) {
         
         String nazevProstoru = ((Button)event.getSource()).idProperty().get();
-        this.vykonavatelPrikazu.provedPrikaz(PrikazJdi.getNazevStatic() +" "+ nazevProstoru);
+        this.spravceHry.provedPrikaz(PrikazJdi.getNazevStatic() +" "+ nazevProstoru);
         
     }
     
@@ -79,7 +75,7 @@ public class SeznamVychodu implements Observer{
     
     private void obnov() {
         
-        for (Prostor prostor : hra.getHerniPlan().getAktualniProstor().getVychody()) {
+        for (Prostor prostor : spravceHry.getHra().getHerniPlan().getAktualniProstor().getVychody()) {
             
             Button b = new Button();
             b.setText(prostor.getNazev());

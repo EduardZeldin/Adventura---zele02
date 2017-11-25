@@ -17,7 +17,7 @@ import logika.Batoh;
 import logika.IHra;
 import utils.Observer;
 import logika.PrikazVyhod;
-import utils.IVykonavatelPrikazu;
+import logika.ISpravceHry;
 
 /**
  * Třída VeciVInventari vytváří seznam obrázků vecí, které jsou v inventáři.
@@ -31,13 +31,11 @@ public class VeciVBatohu implements Observer {
     
     private Pane listaBatohu;
     private Pane veciVBatohu;
-    public IHra hra;
-    private IVykonavatelPrikazu vykonavatelPrikazu;
+    private ISpravceHry spravceHry;
 
-    public VeciVBatohu(IHra hra, IVykonavatelPrikazu vykonavatelPrikazu) {
+    public VeciVBatohu(ISpravceHry spravceHry) {
         
-        this.hra = hra;
-        this.vykonavatelPrikazu = vykonavatelPrikazu;
+        this.spravceHry = spravceHry;
         this.veciVBatohu = new HBox();
         this.veciVBatohu.setPrefHeight(80);
         
@@ -49,8 +47,7 @@ public class VeciVBatohu implements Observer {
         nazev.setText("Veci v Batohu:");
         this.listaBatohu.getChildren().add(nazev);
         this.listaBatohu.getChildren().add(veciVBatohu);
-        this.update();
-        
+                
     }
     
     public Pane getListaBatohu() {
@@ -64,7 +61,7 @@ public class VeciVBatohu implements Observer {
     private void vyhodVecEventHandler(ActionEvent event) {
         
         String nazevVeci = ((Button)event.getSource()).idProperty().get();
-        this.vykonavatelPrikazu.provedPrikaz(PrikazVyhod.getNazevStatic() +" "+ nazevVeci);
+        this.spravceHry.provedPrikaz(PrikazVyhod.getNazevStatic() +" "+ nazevVeci);
         
     }
     
@@ -75,7 +72,7 @@ public class VeciVBatohu implements Observer {
     
     private void obnov() {
         
-        for (String string : hra.getBatoh().vratObsahBatohu().keySet()) {
+        for (String string : spravceHry.getHra().getBatoh().vratObsahBatohu().keySet()) {
             
             Button b = new Button();
             b.setText(string);

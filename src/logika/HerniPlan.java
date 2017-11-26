@@ -61,8 +61,8 @@ public class HerniPlan implements Subject{
         Prostor patro2 = new Prostor("2.patro","Druhé patro.Oooch, schodiště pořad mění směr", 50, 70);
         Prostor patro3 = new Prostor("3.patro","Třetí patro", 79, 86);
         Prostor komora = new Prostor("Komora","Komora. Vstup do další mistnosti je překrýt obrovským tříhlavým psem", 64, 63);
-        Prostor vez = new Prostor("Vez","Věž.Prostor je plný létajících klíčů", 674, 345);
-        Prostor podzemi = new Prostor ("Podzemi","Tajemná komnata Voldemorta. Voldemort vynucuje Vás podívat se do zrcadla. A zvedá kouzelnou svoji hůl!", 234, 96);
+        Prostor vez = new Prostor("Vez","Věž.Prostor je plný létajících klíčů", 67, 34);
+        Prostor podzemi = new Prostor ("Podzemi","Tajemná komnata Voldemorta. Voldemort vynucuje Vás podívat se do zrcadla. A zvedá kouzelnou svoji hůl!", 24, 60);
         
         
         // přiřazují se průchody mezi prostory (sousedící prostory)

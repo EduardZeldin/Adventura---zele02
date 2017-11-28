@@ -42,11 +42,10 @@ public class Main extends Application implements ISpravceHry {
     private TextField zadejPrikazTextArea;
     private Mapa mapa;
     private MenuLista menuLista;
+    private SeznamPrikazu seznamPrikazu;
     private SeznamVychodu seznamVychodu;
     private VeciVBatohu veciVBatohu;
     private VeciVProstoru veciVProstoru;
-    //private PostavyVProstoru postavyVProstoru;
-    private SeznamPrikazu seznamPrikazu;
 
     public void setHra(IHra hra) {
         this.hra = hra;
@@ -106,7 +105,7 @@ public class Main extends Application implements ISpravceHry {
 
         centralText.setText(hra.vratUvitani());
 
-        Scene scene = new Scene(borderPane, 950, 600);
+        Scene scene = new Scene(borderPane, 950, 640);
 
         primaryStage.setTitle("Adventura");
 
@@ -115,6 +114,10 @@ public class Main extends Application implements ISpravceHry {
         zadejPrikazTextArea.requestFocus();
     }
 
+    /**
+     * Vytvori novou hru: Vycisti observery Zaregistruje observery provede
+     * potrebne updates
+     */
     public void novaHra() {
 
         //TODO odregistruj observerz
@@ -148,11 +151,21 @@ public class Main extends Application implements ISpravceHry {
         zadejPrikazTextArea.requestFocus();
     }
 
+    /**
+     * To co se stane kdyz se zada prikaz
+     *
+     * @param event
+     */
     private void provedPrikazEventHandler(ActionEvent event) {
         String vstupniPrikaz = zadejPrikazTextArea.getText();
         provedPrikaz(vstupniPrikaz);
     }
 
+    /**
+     * Provedeni prikazu v GUI
+     *
+     * @param vstupniPrikaz
+     */
     @Override
     public void provedPrikaz(String vstupniPrikaz) {
 
@@ -170,26 +183,6 @@ public class Main extends Application implements ISpravceHry {
 
     }
 
-    /**
-     * private AnchorPane nastaveniMapy() { AnchorPane obrazekPane = new
-     * AnchorPane();
-     *
-     * ImageView obrazekImageView = new ImageView(new
-     * Image(Main.class.getResourceAsStream("/zdroje/b76167d939ee50ec61a4659c64057cbc--pirate-treasure-maps-buried-treasure.jpg"),
-     * 300,300,false,true));
-     *
-     *
-     * Circle tecka = new Circle(10, Paint.valueOf("red"));
-     *
-     * obrazekPane.setTopAnchor(tecka, 25.0); obrazekPane.setLeftAnchor(tecka,
-     * 100.0);
-     *
-     * obrazekPane.getChildren().addAll(obrazekImageView, tecka);
-     *
-     * return obrazekPane;
-     *
-     * }
-     */
     /**
      * @param args the command line arguments
      */

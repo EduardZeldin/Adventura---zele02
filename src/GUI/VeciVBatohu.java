@@ -21,81 +21,83 @@ import logika.ISpravceHry;
 import logika.Vec;
 
 /**
- * Třída VeciVInventari vytváří seznam obrázků vecí, které jsou v inventáři.
- * Aktualizuje se při nové hře, přejití do jiného prostoru a sebrání/položení
+ * Třída VeciVBatohu vytváří seznam obrázků vecí, které jsou v batohu ulozene.
+ * Aktualizuje se při nové hře, přejití do jiného prostoru a sebrání/vyhozeni
  * věci.
  *
  * @author Eduard Zeldin
  */
-
 public class VeciVBatohu implements Observer {
-    
+
     private Pane listaBatohu;
     private Pane veciVBatohu;
     private ISpravceHry spravceHry;
 
     public VeciVBatohu(ISpravceHry spravceHry) {
-        
+
         this.spravceHry = spravceHry;
         this.veciVBatohu = new HBox();
         this.veciVBatohu.setPrefHeight(80);
-        
-        
+
         this.listaBatohu = new VBox();
-        
-    
+
         Label nazev = new Label();
         nazev.setText("Veci v Batohu:");
         this.listaBatohu.getChildren().add(nazev);
         this.listaBatohu.getChildren().add(veciVBatohu);
-                
+
     }
-    
+
     public Pane getListaBatohu() {
-        
+
         return this.listaBatohu;
-        
+
     }
+
     /*
     * Udalost ktera se stane pri kliknuti na tlacitko veci v batohu
-    */
+     */
     private void vyhodVecEventHandler(ActionEvent event) {
-        
-        String nazevVeci = ((Button)event.getSource()).idProperty().get();
-        this.spravceHry.provedPrikaz(PrikazVyhod.getNazevStatic() +" "+ nazevVeci);
-        
+
+        String nazevVeci = ((Button) event.getSource()).idProperty().get();
+        this.spravceHry.provedPrikaz(PrikazVyhod.getNazevStatic() + " " + nazevVeci);
+
     }
-    
+
+    /**
+     * Metoda vycisti seznam veci v batohu
+     */
     private void smaz() {
         this.veciVBatohu.getChildren().clear();
-        
+
     }
-    
+
+    /**
+     * Metoda obnovi informace o seznamu veci v batohu
+     */
     private void obnov() {
-        
+
         for (Vec vec : spravceHry.getHra().getBatoh().vratObsahBatohu().values()) {
-            
+
             Button b = new Button();
             b.setGraphic(vec.getObrazek());
             b.idProperty().setValue(vec.getNazev());
             b.setOnAction(this::vyhodVecEventHandler);
-            
-            
-            
+
             veciVBatohu.getChildren().add(b);
-            
+
         }
     }
 
-    
+    /**
+     * Zavola metody smaz a obnov
+     */
     @Override
     public void update() {
-        
+
         this.smaz();
         this.obnov();
-        
+
     }
-    
-    
-    
+
 }

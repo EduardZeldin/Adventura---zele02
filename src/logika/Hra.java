@@ -55,6 +55,7 @@ public class Hra implements IHra {
     /**
      *  Vrátí závěrečnou zprávu pro hráče.
      */
+    @Override
     public String vratEpilog() {
         return "Díky, že jste si zahráli.  Ahoj.";
     }
@@ -62,6 +63,7 @@ public class Hra implements IHra {
     /** 
      * Vrací true, pokud hra skončila.
      */
+    @Override
      public boolean konecHry() {
         return konecHry;
     }
@@ -109,6 +111,7 @@ public class Hra implements IHra {
      *  
      *  @return     odkaz na herní plán
      */
+    @Override
      public HerniPlan getHerniPlan(){
         return herniPlan;
      }

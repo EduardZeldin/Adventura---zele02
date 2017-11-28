@@ -1,20 +1,20 @@
 /* Soubor je ulozen v kodovani UTF-8.
  * Kontrola kódování: Příliš žluťoučký kůň úpěl ďábelské ódy. */
 package logika;
+
 import java.net.URL;
 import java.util.*;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-
-/*******************************************************************************
+/**
+ * *****************************************************************************
  * Instance třídy vec představují ...
  *
- * @author    Eduard Zeldin
- * @version   8.5.2017
+ * @author Eduard Zeldin
+ * @version 8.5.2017
  */
-public class Vec
-{
+public class Vec {
+
     //== Datové atributy (statické i instancí)======================================
     private String nazev;
     private boolean prenositelnost;
@@ -22,11 +22,11 @@ public class Vec
     private Map<String, Vec> seznamVeci;
     //== Konstruktory a tovární metody =============================================
 
-    /***************************************************************************
-     *  Konstruktor ....
+    /**
+     * *************************************************************************
+     * Konstruktor ....
      */
-    public Vec(String nazev, boolean prenositelnost,int hmotnost)
-    {
+    public Vec(String nazev, boolean prenositelnost, int hmotnost) {
         this.nazev = nazev;
         this.prenositelnost = prenositelnost;
         this.hmotnost = hmotnost;
@@ -34,40 +34,37 @@ public class Vec
     }
 
     //== Nesoukromé metody (instancí i třídy) ======================================
-    public String getNazev(){
+    public String getNazev() {
         return nazev;
     }
 
-    public boolean jePrenositelna(){
+    public boolean jePrenositelna() {
         return prenositelnost;
     }
-    
-    public int getHmotnost()
-    {
+
+    public int getHmotnost() {
         return this.hmotnost;
     }
-    
-    public Map<String, Vec> vratObsahVeci()
-    {
+
+    public Map<String, Vec> vratObsahVeci() {
         return this.seznamVeci;
     }
-    
-    public void vlozVec(Vec vec)
-    {
-     this.seznamVeci.put(vec.getNazev(),vec);   
+
+    public void vlozVec(Vec vec) {
+        this.seznamVeci.put(vec.getNazev(), vec);
     }
+
     // vybere věc z věci
-    public Vec vyhodVec(String nazev)
-    {
+    public Vec vyhodVec(String nazev) {
         return seznamVeci.get(nazev);
     }
-    
+
     public ImageView getObrazek() {
-        
-       URL url = Vec.class.getResource("/zdroje/" + nazev + ".png");
-       //URL url = Vec.class.getResource("/zdroje/gauc.png");
-       return new ImageView(url.toString());
-        
+
+        URL url = Vec.class.getResource("/zdroje/" + nazev + ".png");
+        //URL url = Vec.class.getResource("/zdroje/gauc.png");
+        return new ImageView(url.toString());
+
     }
-    
+
 }

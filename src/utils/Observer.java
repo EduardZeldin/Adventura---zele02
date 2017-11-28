@@ -7,7 +7,7 @@ package utils;
 
 /**
  *
- * @author User
+ * @author Eduard Zeldin
  */
 public interface Observer {
     

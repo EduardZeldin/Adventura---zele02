@@ -1,5 +1,4 @@
 package logika;
-
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -39,7 +38,7 @@ public class Prostor {
         this.nazev = nazev;
         this.popis = popis;
         this.posLeft = posLeft;
-        this.posTop = posLeft;
+        this.posTop = posTop;
         
         vychody = new HashSet<>();
         veci = new HashMap<>();
@@ -95,6 +94,7 @@ public class Prostor {
      * prekryti metody equals je potreba prekryt i metodu hashCode. Podrobny
      * popis pravidel pro vytvareni metody hashCode je u metody hashCode ve
      * tride Object
+     * @return 
      */
     @Override
     public int hashCode() {

@@ -15,16 +15,16 @@ import logika.IHra;
  * @author Eduard Zeldin
  */
 public class SeznamPrikazu extends FlowPane implements Observer {
-    
+
     private IHra hra;
     private TextArea centralText;
 
     /**
-    *  Konstruktor třídy
-    *  
-    *  @param hra 
-    *  @param centralText
-    */ 
+     * Konstruktor třídy
+     *
+     * @param hra
+     * @param centralText
+     */
     public SeznamPrikazu(IHra hra, TextArea centralText) {
         this.hra = hra;
         this.centralText = centralText;
@@ -32,27 +32,34 @@ public class SeznamPrikazu extends FlowPane implements Observer {
         init();
     }
 
+    /**
+     * Úvodní nastavení příkazů
+     *
+     */
     private void init() {
         this.setPrefWidth(100);
         this.setPrefHeight(300);
         update();
     }
-    
-    
+
+    /**
+     * Restartování adventury
+     *
+     * @param hra Nová hra
+     */
     public void novaHra(IHra hra) {
         hra.getHerniPlan().removeObserver(this);
         this.hra = hra;
         hra.getHerniPlan().registerObserver(this);
         update();
     }
-    
-    
+
+    /**
+     * Update seznamu prikazu
+     */
     @Override
     public void update() {
-        
+
     }
-    
-    
-    
-    
+
 }

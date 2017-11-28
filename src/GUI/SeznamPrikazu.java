@@ -59,7 +59,7 @@ public class SeznamPrikazu extends FlowPane implements Observer {
      */
     @Override
     public void update() {
-
+      
     }
 
 }

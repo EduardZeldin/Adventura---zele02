@@ -141,14 +141,14 @@ public class Main extends Application implements ISpravceHry {
 
         centralText.setText(hra.vratUvitani());
 
-        zadejPrikazTextArea.setText("...");
-
         this.veciVBatohu.update();
         this.seznamVychodu.update();
         this.mapa.update();
         this.veciVProstoru.update();
-
+        
+        zadejPrikazTextArea.setEditable(true);
         zadejPrikazTextArea.requestFocus();
+        zadejPrikazTextArea.setText("...");
     }
 
     /**
